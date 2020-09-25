@@ -1,29 +1,28 @@
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { getToken } from '../services/auth'
+import useAuth from '../hooks/auth'
+import useSWR from 'swr'
+import { getFeaturedPlaylist } from '../services/spotify'
+import Loading from '../components/Loading'
+import Routes from './routes'
 
-export default function Home() {
-  const getAuthorization = async () => {
-    try {
-      const token = await getToken()
-      console.log('token', token)
-    }
-    catch (e) {
-      console.log('e', e)
-    }
-  }
+export default function DashBoard() {
+  // const token = useAuth()
+
+  // const { filters, setFilters } = useState([])
+  // const { data: featuredPlaylists, error} = useSWR(`api/featured-playlist`,  () =>  getFeaturedPlaylist(token))
+  // console.log('featuredPlaylists', featuredPlaylists)
+
+  // if(!featuredPlaylists){
+  //   return <Loading/>
+  // }
+  
+
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Spotifood</title>
-      </Head>
-
-      <main className={styles.main}>
-        <button onClick={getAuthorization}>
-          <a>Clique aqui para logar </a>
-        </button>
-      </main>
+        <Routes />
     </div>
   )
 }
