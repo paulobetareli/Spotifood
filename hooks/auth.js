@@ -1,59 +1,72 @@
-import React, { useState, useEffect } from 'react'
-// import { getToken } from '../services/getAccessToken'
+import React, { useState, useEffect, createContext } from 'react'
+import redirectToSpotify from '../services/auth'
+import Router, { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
-import Router from 'next/router'
-import { getHashes } from 'crypto'
 
+const AuthContext = createContext({})
 
-export default function useAuth() {
-    const [token, setToken] = useState({
-        accessToken: Cookies.get('accessToken'),
-        tokenType: Cookies.get('tokenType')
-    })
-    console.log('tokennn', token)
+export default AuthContext
 
-    useEffect(() => {
-        if (Cookies.get('accessToken')) {
-            setToken({
-                accessToken: Cookies.get('accessToken'),
-                tokenType: Cookies.get('tokenType')
-            })
+export const AuthProvider = ({ children }) => {
+    
+    const [token, setToken] = useState(null)
+
+    React.useEffect(() => {
+        if (!getTokenFromCookie()) {
+            setToken(getTokenFromHashParams())
         }
         else {
-            setToken(getAccessToken())
+            setToken(getTokenFromCookie())
         }
     }, [])
 
-    useEffect(() => {
-        if (!token.accessToken) {
+
+
+    React.useEffect(() => {
+        if (token === false) {
             Router.push('/login')
         }
     }, [token])
 
-    return(token)
-
-}
-
-export function getAccessToken() {
-
-    var hashParams = {}
-    const urlParams = (window.location);
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1)
-    while (e = r.exec(q)) {
-        hashParams[e[1]] = decodeURIComponent(e[2])
-    }
-
-    const token = hashParams
-
-    if (token.access_token) {
-        var expire_in = new Date()
-        expire_in.setTime(expire_in.getTime() + (token.expires_in * 1000))
-        Cookies.set('accessToken', token.access_token, { expires: expire_in, sameSite: 'strict' })
-        Cookies.set('tokenType', token.token_type, { expires: expire_in })
-        return token
-    } else {
+    const getTokenFromCookie = () => {
+        if (Cookies.get('access_token')) {
+            const token = {
+                access_token: Cookies.get('access_token'),
+                token_type: Cookies.get('token_type')
+            }
+            console.log('TOKEN NO COOKIE', token)
+            return token.access_token ? token : false
+        }
         return false
     }
-}
 
+    const getTokenFromHashParams = () => {
+        var hashParams = {}
+        var e, r = /([^&;=]+)=?([^&;]*)/g,
+            q = window.location.hash.substring(1)
+        while (e = r.exec(q)) {
+            hashParams[e[1]] = decodeURIComponent(e[2])
+        }
+        const token = hashParams
+
+        if (token.access_token) {
+            var expire_in = new Date()
+            expire_in.setTime(expire_in.getTime() + (token.expires_in * 1000))
+            Cookies.set('access_token', token.access_token, { expires: expire_in, sameSite: 'strict' })
+            Cookies.set('token_type', token.token_type, { expires: expire_in })
+
+            return token
+        } else {
+            return false
+        }
+
+    }
+
+
+
+    return (
+        <AuthContext.Provider value={{ token }}>
+            {children}
+        </AuthContext.Provider>
+    )
+}

@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import Head from 'next/head'
+import React, { useContext, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
-import useAuth from '../hooks/auth'
+import AuthContext from '../hooks/auth'
 import useSWR from 'swr'
-import { getFeaturedPlaylist } from '../services/spotify'
-import Loading from '../components/Loading'
-import Routes from './routes'
-
-export default function DashBoard() {
-  // const token = useAuth()
-
-  // const { filters, setFilters } = useState([])
-  // const { data: featuredPlaylists, error} = useSWR(`api/featured-playlist`,  () =>  getFeaturedPlaylist(token))
-  // console.log('featuredPlaylists', featuredPlaylists)
-
-  // if(!featuredPlaylists){
-  //   return <Loading/>
-  // }
-  
+import { getFeaturedPlaylist } from '../services/spotifyApi'
 
 
-  return (
-    <div className={styles.container}>
-        <Routes />
-    </div>
-  )
+export const index = () => {
+  const { token } = useContext(AuthContext)
+
+  const { data: featuredPlaylist, error } = useSWR(token ? '/v1/browse/featured-playlists' : null, () => getFeaturedPlaylist(token))
+
+  console.log('featuredPlaylist', featuredPlaylist)
+
+
+  return <div>VAI VIRAR PLAYLST</div>
 }
+
+export default index
