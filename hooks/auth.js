@@ -1,5 +1,4 @@
 import React, { useState, useEffect, createContext } from 'react'
-import redirectToSpotify from '../services/auth'
 import Router, { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 
@@ -8,7 +7,7 @@ const AuthContext = createContext({})
 export default AuthContext
 
 export const AuthProvider = ({ children }) => {
-    
+
     const [token, setToken] = useState(null)
 
     React.useEffect(() => {
