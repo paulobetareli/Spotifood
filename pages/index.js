@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import useSWR from 'swr'
 import { getFeaturedPlaylist } from '../services/spotifyApi'
 import useAuth from '../hooks/auth'
-
+import Loading from '../components/Loading'
 export const index = () => {
   const { token, logout } = useAuth()
   console.log('token no iniciar', token)
@@ -10,6 +10,9 @@ export const index = () => {
 
   console.log('featuredPlaylist', featuredPlaylist)
 
+  if(!featuredPlaylist){
+    return <Loading/>
+  }
 
   return <div>VAI VIRAR PLAYLST
 

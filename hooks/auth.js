@@ -35,14 +35,12 @@ export const useAuth = () => {
                 access_token: Cookies.get('access_token'),
                 token_type: Cookies.get('token_type')
             }
-            console.log('TOKEN NO COOKIE', token)
             return token.access_token ? token : false
         }
         return false
     }
 
     const getTokenFromHashParams = () => {
-        console.log('ENTROU AQUI NO HASH')
         var hashParams = {}
         var e, r = /([^&;=]+)=?([^&;]*)/g,
             q = window.location.hash.substring(1)
