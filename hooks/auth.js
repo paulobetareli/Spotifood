@@ -2,11 +2,8 @@ import React, { useState, useEffect, createContext } from 'react'
 import Router, { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 
-const AuthContext = createContext({})
 
-export default AuthContext
-
-export const AuthProvider = ({ children }) => {
+export const useAuth = () => {
 
     const [token, setToken] = useState(null)
 
@@ -14,11 +11,16 @@ export const AuthProvider = ({ children }) => {
         if (!getTokenFromCookie()) {
             setToken(getTokenFromHashParams())
         }
-        else {
+        else if (!getTokenFromHashParams()) {
             setToken(getTokenFromCookie())
         }
     }, [])
 
+    const logout = () => {
+        setToken(false)
+        Cookies.remove('access_token')
+        Cookies.remove('token_type')
+    }
 
 
     React.useEffect(() => {
@@ -40,6 +42,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const getTokenFromHashParams = () => {
+        console.log('ENTROU AQUI NO HASH')
         var hashParams = {}
         var e, r = /([^&;=]+)=?([^&;]*)/g,
             q = window.location.hash.substring(1)
@@ -50,7 +53,9 @@ export const AuthProvider = ({ children }) => {
 
         if (token.access_token) {
             var expire_in = new Date()
-            expire_in.setTime(expire_in.getTime() + (token.expires_in * 1000))
+            expire_in.setTime(expire_in.getTime() + 1 * (36 * 1000))
+            console.log('expire_in', expire_in.toUTCString())
+
             Cookies.set('access_token', token.access_token, { expires: expire_in, sameSite: 'strict' })
             Cookies.set('token_type', token.token_type, { expires: expire_in })
 
@@ -61,11 +66,10 @@ export const AuthProvider = ({ children }) => {
 
     }
 
-
-
-    return (
-        <AuthContext.Provider value={{ token }}>
-            {children}
-        </AuthContext.Provider>
-    )
+    return {
+        token,
+        logout
+    }
 }
+
+export default useAuth

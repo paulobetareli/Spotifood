@@ -1,5 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
+import useAuth from '../hooks/auth'
 
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID
 const spotifyUrl = 'https://accounts.spotify.com/authorize'
