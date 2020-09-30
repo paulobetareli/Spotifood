@@ -3,23 +3,27 @@ import useSWR from 'swr'
 import { getFeaturedPlaylist } from '../services/spotifyApi'
 import useAuth from '../hooks/auth'
 import Loading from '../components/Loading'
+import FeaturedPlaylist from '../components/FeaturedPlaylist'
+
 export const index = () => {
   const { token, logout } = useAuth()
   console.log('token no iniciar', token)
-  const { data: featuredPlaylist, error } = useSWR(token ? '/v1/browse/featured-playlists' : null, () => getFeaturedPlaylist(token))
+  const { data: featuredPlaylists} = useSWR(token ? '/v1/browse/featured-playlists' : null, () => getFeaturedPlaylist(token))
 
-  console.log('featuredPlaylist', featuredPlaylist)
+  console.log('featuredPlaylists', featuredPlaylists)
 
-  if(!featuredPlaylist){
-    return <Loading/>
+  if (!featuredPlaylists) {
+    return <Loading />
   }
 
-  return <div>VAI VIRAR PLAYLST
-
+  return (
     <div>
-      <button text="Sair" onClick={logout}>Sair</button>
+      <FeaturedPlaylist playlists={featuredPlaylists.playlists}/>
+    <div>
+        <button text="Sair" onClick={logout}>Sair</button>
+      </div>
     </div>
-  </div>
+  )
 }
 
 export default index

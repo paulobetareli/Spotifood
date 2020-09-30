@@ -11,7 +11,7 @@ export const useAuth = () => {
         if (!getTokenFromCookie()) {
             setToken(getTokenFromHashParams())
         }
-        else if (!getTokenFromHashParams()) {
+        else {
             setToken(getTokenFromCookie())
         }
     }, [])

@@ -14,11 +14,11 @@
     }
 
     .btn {
-        @apply font-bold py-2 px-4 rounded;
+        @apply font-bold py-2 px-4 rounded-full;
     }
 
     .btn-primary {
-        background: rgba(0, 0, 0, 0) linear-gradient(261.68deg, rgb(255, 92, 0) 0%, rgb(255, 0, 92) 100%) repeat scroll 0% 0%;
+        background: linear-gradient(90deg, rgba(32,162,38,1) 0%, rgba(161,0,0,1) 100%);
         @apply text-white;
     }
 
@@ -45,22 +45,4 @@
         100%{background-position:0% 50%}
     }
 
-    .btn-blue {
-        @apply bg-blue-500 text-white;
-    }
-    .btn-blue:hover {
-        @apply bg-blue-700;
-    }
-
-    .btn-facebook {
-        @apply text-white;
-        background-color: #4267B2;
-    }
-
-    .btn-gray {
-        @apply bg-gray-400 text-gray-800;
-    }
-    .btn-gray:hover {
-        @apply bg-gray-500;
-    }
 }
