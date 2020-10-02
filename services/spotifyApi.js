@@ -8,7 +8,10 @@ export async function getFilters(token, filter) {
         const response = await fetch(`http://www.mocky.io/v2/5a25fade2e0000213aa90776`, {
             method: 'GET',
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Headers': 'Accept',
+                'Access-Control-Request-Headers': 'origin'
               },
         })
         const res = await response.json()
