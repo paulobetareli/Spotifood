@@ -11,7 +11,7 @@ export async function getFilters() {
             headers: {
                 'Access-Control-Allow-Origin': origin,
                 'Content-Type': 'application/json',
-                'Access-Control-Request-Method': GET,
+                'Access-Control-Request-Method': 'GET',
                 'Access-Control-Allow-Headers': 'Accept',
                 'Access-Control-Request-Headers': 'Content-Type'
               },

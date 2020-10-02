@@ -11,8 +11,8 @@ import { getFilters } from '../services/spotifyApi'
 export const index = () => {
   const { token, logout } = useAuth()
   const { data: featuredPlaylists } = useSWR(token ? '/v1/browse/featured-playlists' : null, () => getFeaturedPlaylist(token))
-  const { data: filters } = useSWR('/v2/5a25fade2e0000213aa90776', () => getFilters())
-
+  const { data: filters, error} = useSWR('/v2/5a25fade2e0000213aa90776', () => getFilters())
+  console.log("error", error)
   if (!featuredPlaylists || !filters) {
     return (
       <Loader />
