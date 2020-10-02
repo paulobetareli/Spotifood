@@ -1,20 +1,10 @@
-const clientId = process.env.NEXT_PUBLIC_CLIENT_ID
 import Cookies from 'js-cookie'
-import Router, { useRouter } from 'next/router'
+import Router from 'next/router'
 
 export async function getFilters() {
-   console.log('origin', origin)
-
     try {
-        const response = await fetch(`http://www.mocky.io/v2/5a25fade2e0000213aa90776`, {
+        const response = await fetch(`https://www.mocky.io/v2/5a25fade2e0000213aa90776`, {
             method: 'GET',
-            headers: {
-                'Access-Control-Allow-Origin': origin,
-                'Content-Type': 'application/json',
-                'Access-Control-Request-Method': 'GET',
-                'Access-Control-Allow-Headers': 'Accept',
-                'Access-Control-Request-Headers': 'Content-Type'
-              },
         })
         const res = await response.json()
         return Promise.resolve(res)
