@@ -7,6 +7,7 @@ export async function getFilters(token, filter) {
     try {
         const response = await fetch(`http://www.mocky.io/v2/5a25fade2e0000213aa90776`, {
             method: 'GET',
+            referrerPolicy: "no-referrer-when-downgrade"
         })
         const res = await response.json()
         return Promise.resolve(res)
