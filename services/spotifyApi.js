@@ -2,16 +2,18 @@ const clientId = process.env.NEXT_PUBLIC_CLIENT_ID
 import Cookies from 'js-cookie'
 import Router, { useRouter } from 'next/router'
 
-export async function getFilters(token, filter) {
+export async function getFilters() {
+   console.log('origin', origin)
 
     try {
         const response = await fetch(`http://www.mocky.io/v2/5a25fade2e0000213aa90776`, {
             method: 'GET',
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': origin,
                 'Content-Type': 'application/json',
+                'Access-Control-Request-Method': GET,
                 'Access-Control-Allow-Headers': 'Accept',
-                'Access-Control-Request-Headers': 'origin'
+                'Access-Control-Request-Headers': 'Content-Type'
               },
         })
         const res = await response.json()
@@ -20,6 +22,7 @@ export async function getFilters(token, filter) {
     } catch (e) {
         return Promise.reject(e)
     }
+
 }
 
 export async function getFeaturedPlaylist(token, filter) {
