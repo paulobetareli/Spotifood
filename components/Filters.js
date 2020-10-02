@@ -1,23 +1,46 @@
-export const Filter = () => {
+import useSWR from 'swr'
+import Loader from './Loader'
+import React from 'react'
+
+export const Filters = ({ filters }) => {
+
+    console.log('filters', filters)
+
     return (
-        <div id="sidebar" class="fixed inset-0 h-full bg-white z-90 w-full border-b -mb-16 lg:-mb-0 lg:static lg:h-auto lg:overflow-y-visible lg:border-b-0 lg:pt-0 lg:w-1/4 lg:block lg:border-0 xl:w-1/5 hidden pt-16">
-            <nav className="px-6 pt-6 overflow-y-auto text-base lg:text-sm lg:py-12 lg:pl-6 lg:pr-8 sticky?lg:h-(screen-16)">
-            <div className="mb-8">
-                <input type="search" className="bg-purple-white shadow rounded border-0 p-3" placeholder="Buscar por nome..." />
-                <div className="absolute right-0 top-0 mt-3 mr-4 text-purple-lighter">
-                </div>
+        <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 w-full gap-3 ">
+
+            {/* {filters.map(filter => {
+                console.log('filter', filter)
+            })} */}
+            <div className="mb-6 w-full ">
+                <input type="text" className="w-full  shadow rounded border-2 p-3" placeholder="Quantidade" />
             </div>
-            <div className="mb-8">
-                <input type="search" className="bg-purple-white shadow rounded border-0 p-3" placeholder="Buscar por nome..." />
-                <div className="absolute right-0 top-0 mt-3 mr-4 text-purple-lighter">
-                </div>
+
+            <div className="mb-6 w-full ">
+                <input type="text" className="w-full shadow rounded border-2 p-3" placeholder="Página" />
             </div>
-            <div className="mb-8">
-                <h5 className="mb-3 lg:mb-2 uppercase tracking-wide font-bold text-sm lg:text-xs text-gray-500">Teste</h5>
+
+            <div className="mb-6 w-full">
+                <select className="shadow w-full bg-white border-2 border-gray-200 text-gray-700 p-3 pr-8 focus:shadow-outline focus:outline-none " id="grid-state">
+                    <option>Selecionar idioma</option>
+                    <option>New Mexico</option>
+                    <option>Missouri</option>
+                    <option>Texas</option>
+                </select>
             </div>
-            </nav>
+            <div className="mb-6 w-full">
+                <select className="shadow w-full bg-white border-2 border-gray-200 text-gray-700 p-3 pr-8 focus:shadow-outline focus:outline-none " id="grid-state">
+                    <option>Selecionar país</option>
+                    <option>New Mexico</option>
+                    <option>Missouri</option>
+                    <option>Texas</option>
+                </select>
+            </div>
+
         </div>
     )
 }
 
-export default Filter
+
+export default Filters
+
