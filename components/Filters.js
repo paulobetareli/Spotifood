@@ -4,8 +4,6 @@ import React from 'react'
 
 export const Filters = ({ filters }) => {
 
-    console.log('filters', filters)
-
     return (
         <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 w-full gap-3 ">
 

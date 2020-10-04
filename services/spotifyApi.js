@@ -15,12 +15,15 @@ export async function getFilters() {
 
 }
 
-export async function getFeaturedPlaylist(token, filter) {
+export async function getFeaturedPlaylist(token, filters) {
+    let searchQuery = filters ? Object.keys(filters).map(key =>
+        `${key}=${filters[key]}&`).join('') : null
+
     const headers = {
         Authorization: `${token.token_type} ${token.access_token}`,
     }
     try {
-        const response = await fetch(`https://api.spotify.com/v1/browse/featured-playlists`, {
+        const response = await fetch(`https://api.spotify.com/v1/browse/featured-playlists?${searchQuery}`, {
             method: 'GET',
             headers,
         })
