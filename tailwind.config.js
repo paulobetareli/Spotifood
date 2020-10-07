@@ -21,6 +21,7 @@ module.exports = {
         },
     },
     variants: {
+        gridTemplateColumns: ['responsive'],
         borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
     },
 }

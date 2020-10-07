@@ -20,7 +20,7 @@ export const index = () => {
     setFeaturedPlaylists(_featuredPlaylists)
   }, [_featuredPlaylists])
 
-
+console.log('featuredPlaylists', featuredPlaylists)
   const getPlaylistFilteredByName = (playlistsByName) => {
     const newPlaylistArray = {
       ...featuredPlaylists,
@@ -40,9 +40,11 @@ export const index = () => {
   const getFiltersValues = (playlists) => {
     setFiltersValues()
   }
+  console.log('_featuredPlaylists', _featuredPlaylists)
+  console.log('_featuredPlaylists', _featuredPlaylists)
 
-  console.log("error", error)
-  if (!featuredPlaylists || !filters) {
+
+  if (!_featuredPlaylists || !filters || !featuredPlaylists) {
     return (
       <Loader />
     )

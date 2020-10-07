@@ -6,11 +6,9 @@ export default function Navbar({ logout, playlists, getPlaylist }) {
     const options = {
         includeScore: true,
         matchEmptyQuery: true,
-        keys: ['name']
+        keys: [{name: 'name', weight: 0.3}]
     }
     const fuse = new Fuse(playlists.items, options)
-
-  
 
     return (
         <div className="flex mb-6 h-16 justify-between py-6 z-100 items-center">
