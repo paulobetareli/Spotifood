@@ -48,15 +48,12 @@ export const useAuth = () => {
             hashParams[e[1]] = decodeURIComponent(e[2])
         }
         const token = hashParams
-
         if (token.access_token) {
             var expire_in = new Date()
             expire_in.setTime(expire_in.getTime() + 1 * (36 * 1000))
             console.log('expire_in', expire_in.toUTCString())
-
             Cookies.set('access_token', token.access_token, { expires: expire_in, sameSite: 'strict' })
             Cookies.set('token_type', token.token_type, { expires: expire_in })
-
             return token
         } else {
             return false
