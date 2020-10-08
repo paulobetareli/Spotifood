@@ -46,7 +46,6 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
             UpdatePlaylist({ ...formData, [key]: inputValue })
 
         } else {
-
             const aux = delete formData[key]
             setFormData({...aux})
             UpdatePlaylist({...aux})

@@ -77,7 +77,7 @@ export const index = () => {
   }
 
 
-  if (!featuredPlaylists || !filters || !auxFeaturedPlaylists) {
+  if (!_featuredPlaylists || !filters || !featuredPlaylists) {
     return (
       <Loader />
     )
