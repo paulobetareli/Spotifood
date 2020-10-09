@@ -7,54 +7,32 @@ import Filters from '../components/Filters'
 import Navbar from '../components/Navbar'
 import { getFilters } from '../services/spotifyApi'
 import { toast } from 'react-toastify'
-import Router from 'next/router'
+import useSWR from 'swr'
 
 export const index = () => {
   const filtersValues = {}
   const [featuredPlaylists, setFeaturedPlaylists] = useState()
-  const [filters, setFilters] = useState()
   const [isLoading, setIsLoading] = useState(false)
-
-
-  const [auxFeaturedPlaylists, setAuxFeaturedPlaylists] = useState()
 
   const { token, logout } = useAuth()
 
-  const getContent = async (_filtersValues) => {
-    try {
+  const { data: filters } = useSWR('/v2/5a25fade2e0000213aa90776', () => getFilters())
+  const { data: _featuredPlaylists, error } = useSWR(token ? '/v1/browse/featured-playlists' : null, () => getFeaturedPlaylist('/v1/browse/featured-playlists', token, filtersValues),  { refreshInterval: 30000 },)
 
-      const _featuredPlaylists = await getFeaturedPlaylist('/v1/browse/featured-playlists', token, _filtersValues)
-      const _filters = await getFilters()
-      setFilters(_filters)
-      setAuxFeaturedPlaylists(_featuredPlaylists)
-    }
-    catch (e) {
-      console.log('e', e)
-      Router.push('/login')
-      return toast.warning('Necessário novo login')
-    }
-
-  }
 
   useEffect(() => {
-    if (token) {
-      getContent(filtersValues)
-    }
-  }, [token])
-
-  useEffect(() => {
-    setFeaturedPlaylists(auxFeaturedPlaylists)
-  }, [auxFeaturedPlaylists])
+    setFeaturedPlaylists(_featuredPlaylists)
+  }, [_featuredPlaylists])
 
   const handleUpdateFeaturedPlaylist = async (_filtersValues) => {
     setIsLoading(true)
     try {
       const _featuredPlaylists = await getFeaturedPlaylist('/v1/browse/featured-playlists', token, _filtersValues)
-      setAuxFeaturedPlaylists(_featuredPlaylists)
+      setFeaturedPlaylists(_featuredPlaylists)
       setIsLoading(false)
     } catch (e) {
+      console.log('e', e)
       setIsLoading(false)
-      return toast.error('Erro ao atualizar')
 
     }
 
@@ -85,7 +63,7 @@ export const index = () => {
 
   return (
     <div>
-      <Navbar getPlaylist={getPlaylistFilteredByName} playlists={auxFeaturedPlaylists.playlists} logout={logout} />
+      <Navbar getPlaylist={getPlaylistFilteredByName} playlists={_featuredPlaylists.playlists} logout={logout} />
       <div className="justify-center m-10">
         <Filters UpdatePlaylist={handleUpdateFeaturedPlaylist} filters={filters.filters} />
         <div className="mt-6">

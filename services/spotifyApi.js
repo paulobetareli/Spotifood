@@ -30,11 +30,11 @@ export async function getFeaturedPlaylist(path, token = null, filters) {
     const json = await response.json()
 
     if (!response.ok) {
-        console.log('json', json)
         var error = new Error(json.error.message)
         error.status = json.error.status
         Cookies.remove('access_token')
         Cookies.remove('token_type')
+        Router.push('/login')
         throw error
     }
     return json

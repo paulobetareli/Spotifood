@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
 import { number as yupNumber } from 'yup'
-
+import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker"
+import ptBR from 'date-fns/locale/pt-BR'
+registerLocale('pt-BR', ptBR)
 export const Filters = ({ filters, UpdatePlaylist }) => {
 
     const [formData, setFormData] = useState({})
-    const [limitError, setLimitError] = useState()
-    const [offsetError, setOffsetError] = useState()
     const [formErrors, setFormErrors] = useState({})
+    const [date, setDate] = useState(new Date())
 
-    console.log('filters', filters)
     const getFilterObj = (id) => {
         return filters.find(filter => id === filter.id)
     }
+
+    const CustomInput = ({ value, onClick }) => (
+        <button className="w-full shadow border-2 text-left text-gray-500 border-gray p-3" onClick={onClick}>
+            {value}
+        </button>
+    );
 
     function getErrorByKey(key) {
         if (!formErrors || Object.keys(formErrors).length === 0) {
@@ -24,11 +30,17 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
         return error
     }
 
+    function handleChangeDate(date) {
+        const dateFilter = { 'timestamp': date.toISOString() }
+        setFormData(dateFilter)
+        UpdatePlaylist(dateFilter)
+
+    }
+
     function renderError(key) {
         const error = getErrorByKey(key)
         return error && <div className="flex">{error}</div>
     }
-    console.log('formData', formData)
 
     function handleChangeOffset(key, inputValue) {
         const newObj = (inputValue ? { [key]: inputValue } : { [key]: 0 })
@@ -38,8 +50,6 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
     }
 
     function handleChangeSelect(key, inputValue) {
-        console.log('inputValue', inputValue)
-
         if (inputValue !== 'nofilter') {
 
             setFormData({ ...formData, [key]: inputValue })
@@ -47,8 +57,8 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
 
         } else {
             const aux = delete formData[key]
-            setFormData({...aux})
-            UpdatePlaylist({...aux})
+            setFormData({ ...aux })
+            UpdatePlaylist({ ...aux })
         }
 
     }
@@ -77,39 +87,65 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
     }
 
     return (
-        <div className="grid lg:grid-cols-4 md:grid-cols-4 grid-cols-2 w-full gap-3 ">
-            <div className='flex flex-col'>
-                <div className={` w-full border-2 ${getErrorByKey('limit') && 'border-red-500'} `}>
-                    <input type="number" min="1" max="50" onChange={event => handleChangeLimit('limit', event.target.value)} className={`w-full  p-3 ${getErrorByKey('limit') && 'outline-none'}`} placeholder="Quantidade" />
-                </div>
-                {renderError('limit')}
-            </div>
-            <div className="mb-6 w-full ">
-                <input type="number" min='0' onChange={event => handleChangeOffset('offset', event.target.value)} className="w-full shadow rounded border-2 p-3" placeholder="Página" />
-            </div>
-
-            <div className="mb-6 w-full">
+        <div>
+            <div className="grid lg:grid-cols-5 md:grid-cols-5 grid-cols-2 w-full gap-2 ">
 
                 <select
                     onChange={(event) => handleChangeSelect('locale', event.target.value)}
-                    className="shadow w-full bg-white border-2 border-gray-200 text-gray-700 p-3 pr-8 focus:shadow-outline focus:outline-none "
+                    className="shadow w-full bg-white border-2 text-gray-500 p-3 pr-8 focus:shadow-outline focus:outline-none "
                 >
                     <option value={'nofilter'}>Selecionar idioma</option>
                     {getFilterObj('locale').values.map(locale =>
                         <option value={locale.value}>{locale.name}</option>
                     )}
                 </select>
-            </div>
-            <div className="mb-6 w-full">
                 <select
                     onChange={(event) => handleChangeSelect('country', event.target.value)}
-                    className="shadow w-full bg-white border-2 border-gray-200 text-gray-700 p-3 pr-8 focus:shadow-outline focus:outline-none "
+                    className="shadow w-full bg-white border-2 text-gray-500 p-3 pr-8 focus:shadow-outline focus:outline-none "
                 >
-                    <option value={'nofilter'}>Selecionar país</option>
+                    <option className="text-gray-500  p-3 " value={'nofilter'}>Selecionar país</option>
                     {getFilterObj('country').values.map(locale =>
-                        <option value={locale.value}>{locale.name}</option>
+                        <option className="text-gray-500 " value={locale.value}>{locale.name}</option>
                     )}
                 </select>
+                <div className='flex flex-col'>
+                    <div className={`w-full  ${getErrorByKey('limit') && 'border-red-500'} `}>
+                        <input type="number" min="1" max="50" onChange={event => handleChangeLimit('limit', event.target.value)} className={`w-full shadow rounded border-2  p-3 ${getErrorByKey('limit') && 'outline-none'}`} placeholder="Quantidade" />
+                    </div>
+                    {renderError('limit')}
+                </div>
+
+                <div className="w-full ">
+                    <input type="number" min='0' onChange={event => handleChangeOffset('offset', event.target.value)} className="w-full shadow rounded border-2 p-3" placeholder="Página" />
+                </div>
+                <div className="hidden lg:w-full lg:grid lg:grid-col-1 md:w-full md:grid md:grid-col-1">
+                    <DatePicker
+                        customInput={<CustomInput />}
+                        onChange={date => handleChangeDate(date)}
+                        selected={date}
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        locale="pt-BR"
+                        timeFormat="p"
+                        dateFormat="Pp"
+                    />
+                </div>
+
+
+            </div>
+            <div className="w-full md:hidden lg:hidden grid grid-col-1 mt-2">
+
+                <DatePicker
+                    customInput={<CustomInput />}
+                    onChange={date => handleChangeDate(date)}
+                    selected={date}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    locale="pt-BR"
+                    timeFormat="p"
+                    dateFormat="Pp"
+                />
+
             </div>
 
         </div>

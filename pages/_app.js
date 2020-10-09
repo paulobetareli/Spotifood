@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import '../styles/components.css'
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import "react-datepicker/dist/react-datepicker.css";
 import { Fragment } from 'react'
 import Head from 'next/head'
 
