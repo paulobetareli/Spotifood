@@ -21,7 +21,3 @@ NEXT_PUBLIC_CLIENT_ID=cb221986240a4932971bbade058c90b5
 Now, just run:
 
 $ npm run dev
-
-
-
-# iFood Frontend Test

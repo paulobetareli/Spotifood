@@ -6,7 +6,6 @@ import FeaturedPlaylist from '../components/FeaturedPlaylist'
 import Filters from '../components/Filters'
 import Navbar from '../components/Navbar'
 import { getFilters } from '../services/spotifyApi'
-import { toast } from 'react-toastify'
 import useSWR from 'swr'
 
 export const index = () => {

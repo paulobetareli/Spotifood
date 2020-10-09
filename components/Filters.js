@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { number as yupNumber } from 'yup'
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker"
+import DatePicker, { registerLocale } from "react-datepicker"
 import ptBR from 'date-fns/locale/pt-BR'
 registerLocale('pt-BR', ptBR)
 export const Filters = ({ filters, UpdatePlaylist }) => {
