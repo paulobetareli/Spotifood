@@ -1,4 +1,4 @@
-You can acces a demo [here](https://myspotifood.vercel.app/)
+You can access a demo [here](https://myspotifood.vercel.app/)
 
 # Technologies used
 * React
