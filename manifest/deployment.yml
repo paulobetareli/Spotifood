@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spotifood
+  namespace: spotifood-namespace
+  labels:
+    app: spotifood
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spotifood
+  template:
+    metadata:
+      labels:
+        app: spotifood
+    spec:
+      containers:
+      - name: spotifood
+        image: paulobeta/spotifood:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
