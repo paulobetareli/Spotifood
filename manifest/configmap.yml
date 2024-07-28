@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spotifood-config
+  namespace: spotifood-namespace
+data:
+  NEXT_PUBLIC_CLIENT_ID: cb221986240a4932971bbade058c90b5
