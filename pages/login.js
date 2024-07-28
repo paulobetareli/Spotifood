@@ -28,7 +28,7 @@ export default function loginPage() {
                         <a href="/" alt="Spotifood"><img src="https://res.cloudinary.com/paulobetareli/image/upload/w_465,h_250,c_limit/v1601350706/Spotifood/spotifood_uboyy7.png" alt="Spotifood" /></a>
                     </div>
                     <button onClick={redirectToSpotify} className="mt-6 btn btn-primary w-2/4">
-                        Entrar
+                        Entrar teste
                     </button>
                     <div  className='mt-3'>
                         <text className='text-sm'>Para acessar a aplicação você precisar estar logado</text>
