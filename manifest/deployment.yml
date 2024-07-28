@@ -23,5 +23,8 @@ spec:
         env:
         - name: NODE_ENV
           value: "production"
+        envFrom:
+        - configMapRef:
+            name: spotifood-config
       imagePullSecrets:
       - name: my-registry-key
