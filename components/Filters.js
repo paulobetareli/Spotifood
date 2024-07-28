@@ -105,7 +105,7 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
                     className="shadow w-full bg-white border-2 text-gray-500 p-3 pr-8 focus:shadow-outline focus:outline-none "
                 >
                     <option value={'nofilter'}>Selecionar idioma</option>
-                    {getFilterObj('locale').values.map(locale =>
+                    {getFilterObj('locale')?.values.map(locale =>
                         <option value={locale.value}>{locale.name}</option>
                     )}
                 </select>
@@ -117,7 +117,7 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
                     className="shadow w-full bg-white border-2 text-gray-500 p-3 pr-8 focus:shadow-outline focus:outline-none "
                 >
                     <option className="text-gray-500  p-3 " value={'nofilter'}>Selecionar país</option>
-                    {getFilterObj('country').values.map(locale =>
+                    {getFilterObj('country')?.values.map(locale =>
                         <option className="text-gray-500 " value={locale.value}>{locale.name}</option>
                     )}
                 </select>
@@ -133,7 +133,6 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
                         showTimeSelect
                         timeFormat="HH:mm"
                         locale="pt-BR"
-                        timeFormat="p"
                         dateFormat="Pp"
                     />
                 </div>
@@ -149,7 +148,6 @@ export const Filters = ({ filters, UpdatePlaylist }) => {
                     showTimeSelect
                     timeFormat="HH:mm"
                     locale="pt-BR"
-                    timeFormat="p"
                     dateFormat="Pp"
                 />
 

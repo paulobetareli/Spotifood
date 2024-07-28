@@ -3,17 +3,17 @@ import Router from 'next/router'
 
 export async function getFilters() {
 
-    const response = await fetch(`https://www.mocky.io/v2/5a25fade2e0000213aa90776`, {
-        method: 'GET',
-    })
-    const json = await response.json()
-    if (!response.ok) {
-        const error = new Error(response.status)
-        error.info = json
-        error.status = response.status
-        throw error
-    }
-    return json
+    // const response = await fetch(`https://www.mocky.io/v2/5a25fade2e0000213aa90776`, {
+    //     method: 'GET',
+    // })
+    // const json = await response.json()
+    // if (!response.ok) {
+    //     const error = new Error(response.status)
+    //     error.info = json
+    //     error.status = response.status
+    //     throw error
+    // }
+    return {filters:[]}
 }
 
 export async function getFeaturedPlaylist(path, token = null, filters) {
