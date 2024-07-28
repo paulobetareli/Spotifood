@@ -1,4 +1,10 @@
+
+
 You can access a demo [here](https://myspotifood.vercel.app/)
+
+# Prerequisite
+
+* - Node.js version 16 or earlier
 
 # Technologies used
 * React
